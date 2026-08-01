@@ -83,6 +83,26 @@
 
     - Display a back icon and a share icon at the top of the page for easy navigation.
     - Why: Improves usability by giving users clear ways to navigate and share content.
+ 
+## Persistent Data
 
+- As a user, I want my data like login state to persist across sessions, so that I don't need to re-enter details every time.
+
+  - Example: Application automatically logs in verified users unless they log out manually.
+  - Why: Saves time and provides seamless access.
+
+---
+
+- As a user, I want to save my preferences such as dark mode, so that the app remembers my settings.
+
+  - Example: Application remembers the user's preferred display settings across sessions.
+  - Why: Improves accessibility and user satisfaction.
+
+---
+
+- As an admin, I want user activity logs to persist, so that I can track and analyze trends over time.
+
+  - Example: Application stores workout performance to generate progress reports.
+  - Why: Enables long-term data analysis and user retention strategies.
 
 
