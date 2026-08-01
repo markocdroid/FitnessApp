@@ -31,27 +31,58 @@
 ## Home Screen
 
 - As a user, I want to view an overview of my data on the home screen so that I can monitor my progress at a glance.
+  
   - Example: A fitness app displays steps walked, calories burned, and water intake on the home screen.
   - Why: Helps users stay motivated by seeing their progress immediately.
 
 ---
 
 - As a user, I want to see popular exercise cards, so that I can explore options based on my preferences.
-  - Acceptance Criteria:
+
     - Display cards with images, titles, descriptions, categories such as strength, cardio, and durations such as 10 or 15 minutes.
     - Why: Helps users discover new exercises that match their interests and fitness goals.
 
 ---
 
 - As a user, I want a daily featured exercise, so that I can quickly access a recommended session.
-  - Acceptance Criteria:
+
     - Showcase one exercise with an image, title, category, and duration in a dedicated section.
     - Why: Provides personalized recommendations to keep users engaged with fresh content daily.
 
 ---
 
 - As a user, I want intuitive navigation icons, so that I can easily move around the app.
-  - Acceptance Criteria:
+
     - Display a logo in the top-left corner and a settings icon in the top-right corner for navigation.
-    - Why: Ensures users can quickly access key features and settings without confusion. 
- 
+    - Why: Ensures users can quickly access key features and settings without confusion.
+
+## Detailed Exercise Page
+
+- As a user, I want an "About" section for each exercise, so that I can understand its benefits and purpose.\
+  
+    - Display a brief description of the exercise, explaining its focus and stress-reducing benefits.
+    - Why: Helps users make informed decisions about which exercises to try based on their goals.
+
+---
+
+- As a user, I want an "Instructions" section for each exercise, so that I can perform it correctly.
+
+    - Provide step-by-step guidance on posture and breathing techniques for the exercise.
+    - Why: Ensures users can follow exercises safely and effectively.
+
+---
+
+- As a user, I want an "Add to Favorites" button, so that I can easily save an exercise for future practice.
+
+    - Include a prominent "Add to Favorites" button at the bottom of the page.
+    - Why: Allows users to quickly revisit preferred exercises without searching again.
+
+---
+
+- As a user, I want navigation icons for sharing and going back, so that I can easily manage the exercise page.
+
+    - Display a back icon and a share icon at the top of the page for easy navigation.
+    - Why: Improves usability by giving users clear ways to navigate and share content.
+
+
+
