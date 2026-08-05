@@ -105,7 +105,7 @@
   - Example: Application stores workout performance to generate progress reports.
   - Why: Enables long-term data analysis and user retention strategies.
  
- ## External API Integration
+## External API Integration
 
 - As a user, I want exercise data to be fetched from an external fitness API, so that I can access up-to-date exercises, categories, and durations on the home screen and detail pages.
 
@@ -121,9 +121,10 @@
 
 ---
 
-- As a user, I want daily reminders delivered through a push notification API, so that I can receive scheduled alerts for my planned workouts on the selected date and time.
+- As a user, I want the app to integrate with a push notification service, so that alerts can be reliably delivered to my device.
 
-  - Example: A user schedules a reminder for a workout at 20:44 and the app sends a push notification via a notification service at the chosen time.
+  - Example: A user schedules a reminder and the app uses a third-party notification service to deliver the alert at the chosen time, even when the app is closed.
   - Why: Keeps users accountable and encourages consistent workout habits through timely alerts.
+
 
 
