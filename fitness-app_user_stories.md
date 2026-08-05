@@ -149,8 +149,6 @@
 
 ## Notifications
 
-Note: Notifications keep users informed about important updates, events, or reminders. Implementing notifications involves creating in-app or push alerts that are timely, relevant, and actionable. Well-designed notifications improve user engagement and retention.
-
 - As a user, I want to receive a daily reminder notification so that I don't forget to complete my tasks.
 
   - Example: The app sends a push notification at 9 AM, reminding users to review their to-do list.
