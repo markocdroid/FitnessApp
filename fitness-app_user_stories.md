@@ -126,5 +126,23 @@
   - Example: A user schedules a reminder and the app uses a third-party notification service to deliver the alert at the chosen time, even when the app is closed.
   - Why: Keeps users accountable and encourages consistent workout habits through timely alerts.
 
+## Settings Menu
 
+- As a user, I want to access a settings menu from any screen so that I can adjust preferences at my convenience.
 
+  - Example: The app includes a settings icon in the top right corner of all screens, linking to the settings menu.
+  - Why: Easy accessibility encourages users to explore and customize their app experience.
+
+---
+
+- As a user, I want to see categorized sections in the settings menu so that I can quickly find the options I need.
+
+  - Example: The app groups settings into categories like **Profile**, **Notifications**, and **Data Sync**.
+  - Why: Logical organization reduces user effort and enhances navigation.
+
+---
+
+- As an admin, I want to enable or disable certain settings for users so that I can maintain app security and compliance.
+
+  - Example: An admin dashboard includes toggles for restricting user access to sensitive settings.
+  - Why: This ensures user settings comply with company policies.
