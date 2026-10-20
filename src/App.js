@@ -12,7 +12,7 @@ function RootNavigator() {
   if (isLoading) {
     return (
       <View style={styles.loading}>
-        <ActivityIndicator size="large" color="#2c1a4d" />
+        <ActivityIndicator style={styles.indicator} />
       </View>
     );
   }
@@ -42,5 +42,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#eef0f7',
+  },
+  indicator: {
+    color: '#2c1a4d',
+    size: 'large',
   },
 });
