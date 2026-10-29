@@ -1,16 +1,5 @@
 import { StyleSheet } from 'react-native';
-
-export const COLORS = {
-  background: '#eef0f7',
-  inputBackground: '#ffffff',
-  inputBorder: '#c7c9d1',
-  text: '#1c1c28',
-  placeholder: '#8a8a94',
-  button: '#2c1a4d',
-  buttonText: '#ffffff',
-  link: '#3554f0',
-  error: '#d63447',
-};
+import { COLORS } from './colors';
 
 export const authStyles = StyleSheet.create({
   container: {

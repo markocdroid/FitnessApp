@@ -1,16 +1,6 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from './colors';
 
-export const COLORS = {
-  background: '#f5f6fa',
-  card: '#ffffff',
-  border: '#e2e4ee',
-  text: '#1c1c28',
-  subtitle: '#566170',
-  tagBackground: '#eef0f7',
-  tagText: '#4b4b57',
-  accent: '#2c1a4d',
-  scrollbar: '#C9C9D3',
-};
 
 export const homeStyles = StyleSheet.create({
   container: {

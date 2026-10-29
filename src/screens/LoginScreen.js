@@ -12,7 +12,8 @@ import {
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../context/AuthContext';
-import { authStyles as styles, COLORS } from '../styles/authStyles';
+import { authStyles as styles } from '../styles/authStyles';
+import { COLORS } from '../styles/colors';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().trim().email('Enter a valid email address').required('Email is required'),

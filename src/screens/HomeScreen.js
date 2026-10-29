@@ -141,6 +141,7 @@ const DAILY_WORKOUT = {
   id: 'daily-barbell-deadlift',
   title: 'Barbell Deadlift',
   tag: 'strength',
+  description: 'Build raw pulling power with proper hip-hinge form and progressive overload.',
   duration: '12 minutes',
   image:
     'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=900&q=70',
@@ -149,7 +150,7 @@ const DAILY_WORKOUT = {
 const DAILY_WORKOUTS = [DAILY_WORKOUT, ...POPULAR_WORKOUTS.slice(1, 6)];
 const DAILY_COMPLETIONS_STORAGE_KEY = 'fitnessapp:daily-workout-completions';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const { user } = useAuth();
   const displayName = user?.username || user?.email?.split('@')[0] || 'user';
   const [completedWorkouts, setCompletedWorkouts] = useState({});
@@ -208,7 +209,12 @@ export default function HomeScreen() {
           contentContainerStyle={styles.popularList}
         >
           {POPULAR_WORKOUTS.map((workout) => (
-            <View key={workout.id} style={styles.workoutCard}>
+            <Pressable
+              key={workout.id}
+              accessibilityRole="button"
+              onPress={() => navigation.navigate('Detail', { item: workout })}
+              style={styles.workoutCard}
+            >
               <Image source={{ uri: workout.image }} style={styles.workoutImage} resizeMode="cover" />
               <View style={styles.tagPill}>
                 <Text style={styles.tagText}>{workout.tag}</Text>
@@ -216,7 +222,7 @@ export default function HomeScreen() {
               <Text style={styles.workoutTitle}>{workout.title}</Text>
               <Text style={styles.workoutDescription}>{workout.description}</Text>
               <Text style={styles.workoutDuration}>{workout.duration}</Text>
-            </View>
+            </Pressable>
           ))}
         </ScrollView>
 
@@ -225,11 +231,21 @@ export default function HomeScreen() {
         <Text style={styles.sectionTitle}>Daily Workout</Text>
         {DAILY_WORKOUTS.map((workout) => (
           <View key={workout.id} style={styles.dailyCard}>
-            <Image source={{ uri: workout.image }} style={styles.dailyImage} resizeMode="cover" />
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => navigation.navigate('Detail', { item: workout })}
+            >
+              <Image source={{ uri: workout.image }} style={styles.dailyImage} resizeMode="cover" />
+            </Pressable>
             <View style={styles.dailyInfo}>
-              <Text style={styles.dailyTitle}>{workout.title}</Text>
-              <Text style={styles.dailyTag}>{workout.tag}</Text>
-              <Text style={styles.dailyDuration}>{workout.duration}</Text>
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => navigation.navigate('Detail', { item: workout })}
+              >
+                <Text style={styles.dailyTitle}>{workout.title}</Text>
+                <Text style={styles.dailyTag}>{workout.tag}</Text>
+                <Text style={styles.dailyDuration}>{workout.duration}</Text>
+              </Pressable>
               <Pressable
                 accessibilityLabel={`Mark ${workout.title} as completed`}
                 accessibilityRole="checkbox"

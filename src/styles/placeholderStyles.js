@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from './homeStyles';
+import { COLORS } from './colors';
 
 export const placeholderStyles = StyleSheet.create({
   screen: {
