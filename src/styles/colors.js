@@ -15,6 +15,7 @@ export const COLORS = {
   link: '#3554f0',
   favorite: '#ff7a54',
   tabInactive: '#a3a3b3',
+  logout: '#ffbfca',
   error: '#d63447',
   scrollbar: '#C9C9D3'
 };
