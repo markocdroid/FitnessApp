@@ -6,11 +6,20 @@ import TopNavBar from '../components/TopNavBar';
 import { useAuth } from '../context/AuthContext';
 import { homeStyles as styles } from '../styles/homeStyles';
 
+const DEADLIFT_INSTRUCTIONS = [
+  'Stand with feet hip-width apart, barbell over mid-foot.',
+  'Hinge at the hips and grip the bar just outside your knees.',
+  'Brace your core and drive through your heels to stand.',
+  'Keep the bar close to your body throughout the lift.',
+  'Lower with control for 3 sets of 8 reps, rest 90 seconds.',
+];
+
 // Royalty-free stock photos from Unsplash (https://unsplash.com/license).
 const POPULAR_WORKOUTS = [
   {
     id: 'barbell-deadlift',
     title: 'Barbell Deadlift',
+    instructions: DEADLIFT_INSTRUCTIONS,
     tag: 'strength',
     description: 'Build raw pulling power with proper hip-hinge form and progressive overload.',
     duration: '12 minutes',
@@ -140,6 +149,7 @@ const POPULAR_WORKOUTS = [
 const DAILY_WORKOUT = {
   id: 'daily-barbell-deadlift',
   title: 'Barbell Deadlift',
+  instructions: DEADLIFT_INSTRUCTIONS,
   tag: 'strength',
   description: 'Build raw pulling power with proper hip-hinge form and progressive overload.',
   duration: '12 minutes',

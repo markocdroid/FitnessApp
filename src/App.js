@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import AuthNavigator from './navigation/AuthNavigator';
 import MainNavigator from './navigation/MainNavigator';
@@ -23,11 +25,13 @@ function RootNavigator() {
 export default function App() {
   return (
     <GestureHandlerRootView style={styles.container}>
-      <AuthProvider>
-        <NavigationContainer>
-          <RootNavigator />
-        </NavigationContainer>
-      </AuthProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <NavigationContainer>
+            <RootNavigator />
+          </NavigationContainer>
+        </AuthProvider>
+      </Provider>
       <StatusBar style="auto" />
     </GestureHandlerRootView>
   );
