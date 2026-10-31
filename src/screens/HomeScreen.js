@@ -1,9 +1,9 @@
 import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import TopNavBar from '../components/TopNavBar';
 import { useAuth } from '../context/AuthContext';
+import { getDailyCompletions, saveDailyCompletions, saveUserAction } from '../storage/localStorage';
 import { homeStyles as styles } from '../styles/homeStyles';
 
 const DEADLIFT_INSTRUCTIONS = [
@@ -158,7 +158,6 @@ const DAILY_WORKOUT = {
 };
 
 const DAILY_WORKOUTS = [DAILY_WORKOUT, ...POPULAR_WORKOUTS.slice(1, 6)];
-const DAILY_COMPLETIONS_STORAGE_KEY = 'fitnessapp:daily-workout-completions';
 
 export default function HomeScreen({ navigation }) {
   const { user } = useAuth();
@@ -168,37 +167,26 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     let isMounted = true;
 
-    AsyncStorage.getItem(DAILY_COMPLETIONS_STORAGE_KEY)
-      .then((stored) => {
-        if (isMounted && stored) {
-          setCompletedWorkouts(JSON.parse(stored));
-        }
-      })
-      .catch(() => {
-        // Ignore corrupt or unavailable storage and leave workouts unselected.
-      });
+    getDailyCompletions().then((stored) => {
+      if (isMounted) setCompletedWorkouts(stored);
+    });
 
     return () => {
       isMounted = false;
     };
   }, []);
 
-  const toggleWorkoutCompletion = async (workoutId) => {
-    const nextCompletedWorkouts = {
-      ...completedWorkouts,
-      [workoutId]: !completedWorkouts[workoutId],
-    };
+  const toggleWorkoutCompletion = async (workout) => {
+    const isCompleted = !completedWorkouts[workout.id];
+    const nextCompletedWorkouts = { ...completedWorkouts, [workout.id]: isCompleted };
 
     setCompletedWorkouts(nextCompletedWorkouts);
-
-    try {
-      await AsyncStorage.setItem(
-        DAILY_COMPLETIONS_STORAGE_KEY,
-        JSON.stringify(nextCompletedWorkouts)
-      );
-    } catch {
-      // Keep the current selection visible if storage is temporarily unavailable.
-    }
+    await saveDailyCompletions(nextCompletedWorkouts);
+    await saveUserAction({
+      type: isCompleted ? 'completed' : 'uncompleted',
+      workoutId: workout.id,
+      label: workout.title,
+    });
   };
 
   return (
@@ -260,7 +248,7 @@ export default function HomeScreen({ navigation }) {
                 accessibilityLabel={`Mark ${workout.title} as completed`}
                 accessibilityRole="checkbox"
                 accessibilityState={{ checked: !!completedWorkouts[workout.id] }}
-                onPress={() => toggleWorkoutCompletion(workout.id)}
+                onPress={() => toggleWorkoutCompletion(workout)}
                 style={({ pressed }) => [
                   styles.completionControl,
                   pressed && styles.completionControlPressed,

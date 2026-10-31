@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { hydrateAndPersistFavorites } from './store/persistFavorites';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import AuthNavigator from './navigation/AuthNavigator';
 import MainNavigator from './navigation/MainNavigator';
@@ -23,6 +25,21 @@ function RootNavigator() {
 }
 
 export default function App() {
+  useEffect(() => {
+    let unsubscribe;
+    let cancelled = false;
+
+    hydrateAndPersistFavorites(store).then((stop) => {
+      if (cancelled) stop();
+      else unsubscribe = stop;
+    });
+
+    return () => {
+      cancelled = true;
+      if (unsubscribe) unsubscribe();
+    };
+  }, []);
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <Provider store={store}>

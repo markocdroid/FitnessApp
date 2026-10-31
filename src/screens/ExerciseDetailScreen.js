@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import TopNavBar from '../components/TopNavBar';
+import { saveUserAction } from '../storage/localStorage';
 import { selectIsFavorite, toggleFavorite } from '../store/favoritesSlice';
 import { detailStyles as styles } from '../styles/detailStyles';
 
@@ -14,7 +15,18 @@ export default function ExerciseDetailScreen({ route }) {
   const isFavorite = useSelector(selectIsFavorite(item.id));
   const [activeTab, setActiveTab] = useState('Instructions');
 
-  const onToggleFavorite = () => dispatch(toggleFavorite(item));
+  useEffect(() => {
+    saveUserAction({ type: 'viewed', workoutId: item.id, label: item.title });
+  }, [item.id, item.title]);
+
+  const onToggleFavorite = () => {
+    dispatch(toggleFavorite(item));
+    saveUserAction({
+      type: isFavorite ? 'unfavorited' : 'favorited',
+      workoutId: item.id,
+      label: item.title,
+    });
+  };
   const instructions = item.instructions ?? [];
 
   return (
