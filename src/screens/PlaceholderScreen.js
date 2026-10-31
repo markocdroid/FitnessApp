@@ -1,10 +1,14 @@
+import { useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TopNavBar from '../components/TopNavBar';
-import { placeholderStyles as styles } from '../styles/placeholderStyles';
+import { useAppTheme } from '../hooks/useAppTheme';
+import { placeholderStyles } from '../styles/placeholderStyles';
 
 // Shared body for screens that don't have dedicated content yet.
 export default function PlaceholderScreen({ title, message }) {
+  const { colors } = useAppTheme();
+  const styles = useMemo(() => placeholderStyles(colors), [colors]);
   return (
     <SafeAreaView style={styles.screen} edges={['top']}>
       <TopNavBar title={title} />

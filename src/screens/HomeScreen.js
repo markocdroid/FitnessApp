@@ -1,11 +1,12 @@
 import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Text, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchQuotes } from '../api/quotes';
 import TopNavBar from '../components/TopNavBar';
 import { useAuth } from '../context/AuthContext';
+import { useAppTheme } from '../hooks/useAppTheme';
 import { getDailyCompletions, saveDailyCompletions, saveUserAction } from '../storage/localStorage';
-import { homeStyles as styles } from '../styles/homeStyles';
+import { homeStyles } from '../styles/homeStyles';
 
 const DEADLIFT_INSTRUCTIONS = [
   'Stand with feet hip-width apart, barbell over mid-foot.',
@@ -161,6 +162,8 @@ const DAILY_WORKOUT = {
 const DAILY_WORKOUTS = [DAILY_WORKOUT, ...POPULAR_WORKOUTS.slice(1, 6)];
 
 export default function HomeScreen({ navigation }) {
+  const { colors } = useAppTheme();
+  const styles = useMemo(() => homeStyles(colors), [colors]);
   const { user } = useAuth();
   const displayName = user?.username || user?.email?.split('@')[0] || 'user';
   const [completedWorkouts, setCompletedWorkouts] = useState({});
@@ -220,7 +223,7 @@ export default function HomeScreen({ navigation }) {
 
         <View style={styles.quoteBox}>
           {isQuoteLoading ? (
-            <ActivityIndicator color="#2c1a4d" />
+            <ActivityIndicator color={colors.accent} />
           ) : (
             <>
               <Text style={styles.quoteText}>

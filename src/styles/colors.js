@@ -1,4 +1,4 @@
-export const COLORS = {
+export const LIGHT_COLORS = {
   background: '#eef0f7',
   border: '#e2e4ee',
   accent: '#2c1a4d',
@@ -17,5 +17,35 @@ export const COLORS = {
   tabInactive: '#a3a3b3',
   logout: '#ffbfca',
   error: '#d63447',
-  scrollbar: '#C9C9D3'
+  scrollbar: '#C9C9D3',
+  header: '#eef0f7',
+  avatar: '#e7e7ec',
+  secondaryButton: '#e5e5e9',
 };
+
+export const DARK_COLORS = {
+  background: '#171821',
+  border: '#393b48',
+  accent: '#c0aaff',
+  card: '#282a35',
+  inputBackground: '#282a35',
+  inputBorder: '#505260',
+  text: '#f1f1f7',
+  tagText: '#dedee8',
+  subtitle: '#b2b3c0',
+  tagBackground: '#343641',
+  placeholder: '#858694',
+  button: '#7658b5',
+  buttonText: '#ffffff',
+  link: '#a9b4ff',
+  favorite: '#ff7a54',
+  tabInactive: '#b2b3c0',
+  logout: '#57343b',
+  error: '#ff7c89',
+  scrollbar: '#393b48',
+  header: '#20212b',
+  avatar: '#393b48',
+  secondaryButton: '#393b48',
+};
+
+export const COLORS = LIGHT_COLORS;

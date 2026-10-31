@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from './colors';
 
-export const topNavBarStyles = StyleSheet.create({
+export const topNavBarStyles = (COLORS) => StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',

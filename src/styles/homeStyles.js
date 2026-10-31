@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from './colors';
 
-
-export const homeStyles = StyleSheet.create({
+export const homeStyles = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -174,6 +172,6 @@ export const homeStyles = StyleSheet.create({
   completionMark: {
     fontSize: 15,
     fontWeight: '700',
-    color: COLORS.card,
+    color: COLORS.buttonText,
   },
 });

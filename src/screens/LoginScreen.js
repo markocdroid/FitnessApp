@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -12,8 +12,8 @@ import {
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../context/AuthContext';
-import { authStyles as styles } from '../styles/authStyles';
-import { COLORS } from '../styles/colors';
+import { useAppTheme } from '../hooks/useAppTheme';
+import { authStyles } from '../styles/authStyles';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().trim().email('Enter a valid email address').required('Email is required'),
@@ -23,6 +23,8 @@ const LoginSchema = Yup.object().shape({
 });
 
 export default function LoginScreen({ navigation }) {
+  const { colors } = useAppTheme();
+  const styles = useMemo(() => authStyles(colors), [colors]);
   const { signIn } = useAuth();
   const [submitError, setSubmitError] = useState('');
 
@@ -52,7 +54,7 @@ export default function LoginScreen({ navigation }) {
                 <TextInput
                   style={[styles.input, touched.email && errors.email && styles.inputError]}
                   placeholder="Email"
-                  placeholderTextColor={COLORS.placeholder}
+                  placeholderTextColor={colors.placeholder}
                   autoCapitalize="none"
                   autoCorrect={false}
                   keyboardType="email-address"
@@ -69,7 +71,7 @@ export default function LoginScreen({ navigation }) {
                 <TextInput
                   style={[styles.input, touched.password && errors.password && styles.inputError]}
                   placeholder="Password"
-                  placeholderTextColor={COLORS.placeholder}
+                  placeholderTextColor={colors.placeholder}
                   autoCapitalize="none"
                   autoCorrect={false}
                   secureTextEntry

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -12,8 +12,8 @@ import {
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../context/AuthContext';
-import { authStyles as styles } from '../styles/authStyles';
-import { COLORS } from '../styles/colors';
+import { useAppTheme } from '../hooks/useAppTheme';
+import { authStyles } from '../styles/authStyles';
 
 const SignUpSchema = Yup.object().shape({
   username: Yup.string()
@@ -26,6 +26,8 @@ const SignUpSchema = Yup.object().shape({
 });
 
 export default function SignUpScreen({ navigation }) {
+  const { colors } = useAppTheme();
+  const styles = useMemo(() => authStyles(colors), [colors]);
   const { signUp } = useAuth();
   const [submitError, setSubmitError] = useState('');
 
@@ -55,7 +57,7 @@ export default function SignUpScreen({ navigation }) {
                 <TextInput
                   style={[styles.input, touched.username && errors.username && styles.inputError]}
                   placeholder="UserName"
-                  placeholderTextColor={COLORS.placeholder}
+                  placeholderTextColor={colors.placeholder}
                   autoCapitalize="none"
                   autoCorrect={false}
                   onChangeText={handleChange('username')}
@@ -71,7 +73,7 @@ export default function SignUpScreen({ navigation }) {
                 <TextInput
                   style={[styles.input, touched.email && errors.email && styles.inputError]}
                   placeholder="Email"
-                  placeholderTextColor={COLORS.placeholder}
+                  placeholderTextColor={colors.placeholder}
                   autoCapitalize="none"
                   autoCorrect={false}
                   keyboardType="email-address"
@@ -88,7 +90,7 @@ export default function SignUpScreen({ navigation }) {
                 <TextInput
                   style={[styles.input, touched.password && errors.password && styles.inputError]}
                   placeholder="Password"
-                  placeholderTextColor={COLORS.placeholder}
+                  placeholderTextColor={colors.placeholder}
                   autoCapitalize="none"
                   autoCorrect={false}
                   secureTextEntry

@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from './colors';
+import { LIGHT_COLORS as COLORS } from './colors';
 
 export { COLORS };
 
-export const detailStyles = StyleSheet.create({
+export const detailStyles = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -100,7 +100,7 @@ export const detailStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   favoriteButtonText: {
-    color: COLORS.card,
+    color: COLORS.buttonText,
     fontSize: 20,
     fontWeight: '700',
   },

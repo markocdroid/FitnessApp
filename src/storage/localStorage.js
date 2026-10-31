@@ -7,6 +7,7 @@ const KEYS = {
   favorites: 'fitnessapp:favorites',
   actions: 'fitnessapp:user-actions',
   notifications: 'fitnessapp:notifications',
+  settings: 'fitnessapp:settings',
 };
 
 const MAX_ACTIONS = 100;
@@ -42,6 +43,9 @@ export const getDailyCompletions = () => readJson(KEYS.completions, {});
 
 export const saveNotifications = (notifications) => writeJson(KEYS.notifications, notifications);
 export const getNotifications = () => readJson(KEYS.notifications, []);
+
+export const saveSettings = (settings) => writeJson(KEYS.settings, settings);
+export const getSettings = () => readJson(KEYS.settings, {});
 
 export const getUserActions = () => readJson(KEYS.actions, []);
 export const clearUserActions = () => AsyncStorage.removeItem(KEYS.actions).catch(() => {});

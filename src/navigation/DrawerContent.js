@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, Text, useWindowDimensions, View } from 'react-native';
 import { useDrawerProgress } from '@react-navigation/drawer';
 import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
-import { COLORS } from '../styles/colors';
-import { drawerStyles as styles } from '../styles/drawerStyles';
+import { useAppTheme } from '../hooks/useAppTheme';
+import { drawerStyles } from '../styles/drawerStyles';
 
 const MENU_ITEMS = [
   { route: 'Home', label: 'Home', icon: 'home-outline' },
@@ -16,7 +16,7 @@ const MENU_ITEMS = [
   { route: 'Fitness Reports', label: 'Fitness Reports', icon: 'stats-chart-outline' },
 ];
 
-function MenuRow({ icon, label, onPress, isLogout, selected }) {
+function MenuRow({ icon, label, onPress, isLogout, selected, colors, styles }) {
   return (
     <View style={[styles.highlight, selected && styles.highlightSelected]}>
       <Pressable
@@ -26,7 +26,7 @@ function MenuRow({ icon, label, onPress, isLogout, selected }) {
         style={({ pressed }) => [styles.row, isLogout && styles.logoutRow, pressed && styles.pressed]}
       >
         <View style={[styles.iconTile, isLogout && styles.logoutTile]}>
-          <Ionicons name={icon} size={24} color={COLORS.text} />
+          <Ionicons name={icon} size={24} color={colors.text} />
         </View>
         <Text style={styles.label}>{label}</Text>
       </Pressable>
@@ -37,6 +37,8 @@ function MenuRow({ icon, label, onPress, isLogout, selected }) {
 // Logout is an action, not a route, so it's handled here instead of as a Drawer.Screen.
 export default function DrawerContent({ navigation, state }) {
   const { signOut } = useAuth();
+  const { colors } = useAppTheme();
+  const styles = useMemo(() => drawerStyles(colors), [colors]);
   const { width: screenWidth } = useWindowDimensions();
   const progress = useDrawerProgress();
   // Fades out as soon as the drawer starts closing so it never overlaps the screen's own title.
@@ -72,9 +74,18 @@ export default function DrawerContent({ navigation, state }) {
             label={label}
             selected={state.routes[state.index].name === route}
             onPress={() => navigation.navigate(route)}
+            colors={colors}
+            styles={styles}
           />
         ))}
-        <MenuRow icon="arrow-back" label="Logout" onPress={signOut} isLogout />
+        <MenuRow
+          icon="arrow-back"
+          label="Logout"
+          onPress={signOut}
+          isLogout
+          colors={colors}
+          styles={styles}
+        />
       </View>
     </SafeAreaView>
   );

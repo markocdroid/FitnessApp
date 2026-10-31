@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from './colors';
 
-export const placeholderStyles = StyleSheet.create({
+export const placeholderStyles = (COLORS) => StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: COLORS.background,

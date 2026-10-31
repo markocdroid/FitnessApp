@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import TopNavBar from '../components/TopNavBar';
+import { useAppTheme } from '../hooks/useAppTheme';
 import { saveUserAction } from '../storage/localStorage';
 import { selectIsFavorite, toggleFavorite } from '../store/favoritesSlice';
-import { detailStyles as styles } from '../styles/detailStyles';
+import { detailStyles } from '../styles/detailStyles';
 
 const TABS = ['About', 'Instructions'];
 
 export default function ExerciseDetailScreen({ route }) {
   const { item } = route.params;
+  const { colors } = useAppTheme();
+  const styles = useMemo(() => detailStyles(colors), [colors]);
   const dispatch = useDispatch();
   const isFavorite = useSelector(selectIsFavorite(item.id));
   const [activeTab, setActiveTab] = useState('Instructions');

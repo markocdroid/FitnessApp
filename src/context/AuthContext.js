@@ -31,6 +31,7 @@ export function AuthProvider({ children }) {
       isAuthenticated: !!user,
       user,
       isLoading,
+      updateUserProfile: persistUser,
       // TODO: wire up to a real authentication backend
       signIn: ({ email }) => persistUser({ email }),
       signUp: ({ username, email }) => persistUser({ username, email }),

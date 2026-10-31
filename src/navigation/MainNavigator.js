@@ -6,7 +6,7 @@ import FitnessReportsScreen from '../screens/FitnessReportsScreen';
 import HomeScreen from '../screens/HomeScreen';
 import PlaceholderScreen from '../screens/PlaceholderScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import { COLORS } from '../styles/colors';
+import { useAppTheme } from '../hooks/useAppTheme';
 
 const Drawer = createDrawerNavigator();
 
@@ -15,6 +15,8 @@ const FavouritesScreen = () => (
 );
 
 function MainDrawer() {
+  const { colors } = useAppTheme();
+
   return (
     <Drawer.Navigator
       initialRouteName="Home"
@@ -23,7 +25,7 @@ function MainDrawer() {
         drawerPosition: 'right',
         headerShown: false,
         overlayColor: 'rgba(28, 28, 40, 0.25)',
-        drawerStyle: { backgroundColor: COLORS.background },
+        drawerStyle: { backgroundColor: colors.background },
       }}
       drawerContent={(props) => <DrawerContent {...props} />}
     >

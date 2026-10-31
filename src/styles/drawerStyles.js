@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from './colors';
 
-export const drawerStyles = StyleSheet.create({
+export const drawerStyles = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
@@ -41,6 +40,7 @@ export const drawerStyles = StyleSheet.create({
   },
   highlightSelected: {
     backgroundColor: COLORS.scrollbar,
+    borderRadius: 10,
   },
   row: {
     flexDirection: 'row',
