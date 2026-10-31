@@ -39,6 +39,18 @@ export const homeStyles = StyleSheet.create({
     color: COLORS.subtitle,
     textAlign: 'center',
   },
+  quoteAuthor: {
+    marginTop: 6,
+    fontSize: 12,
+    color: COLORS.subtitle,
+    textAlign: 'center',
+  },
+  quoteAttribution: {
+    marginTop: 8,
+    fontSize: 10,
+    color: COLORS.link,
+    textAlign: 'center',
+  },
   sectionTitle: {
     marginTop: 28,
     marginBottom: 14,

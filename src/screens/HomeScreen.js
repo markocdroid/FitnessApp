@@ -1,6 +1,7 @@
-import { Image, Pressable, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { fetchQuotes } from '../api/quotes';
 import TopNavBar from '../components/TopNavBar';
 import { useAuth } from '../context/AuthContext';
 import { getDailyCompletions, saveDailyCompletions, saveUserAction } from '../storage/localStorage';
@@ -163,6 +164,27 @@ export default function HomeScreen({ navigation }) {
   const { user } = useAuth();
   const displayName = user?.username || user?.email?.split('@')[0] || 'user';
   const [completedWorkouts, setCompletedWorkouts] = useState({});
+  const [quote, setQuote] = useState(null);
+  const [isQuoteLoading, setIsQuoteLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchQuotes()
+      .then(([daily]) => {
+        if (isMounted) setQuote(daily);
+      })
+      .catch(() => {
+        // Offline or rate limited: the box falls back to the built-in quote.
+      })
+      .finally(() => {
+        if (isMounted) setIsQuoteLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -197,7 +219,22 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.pageTitle}>Find your perfect workout</Text>
 
         <View style={styles.quoteBox}>
-          <Text style={styles.quoteText}>"The Only Bad Workout Is The One That Didn't Happen."</Text>
+          {isQuoteLoading ? (
+            <ActivityIndicator color="#2c1a4d" />
+          ) : (
+            <>
+              <Text style={styles.quoteText}>
+                "{quote ? quote.text : "The Only Bad Workout Is The One That Didn't Happen."}"
+              </Text>
+              {quote?.author ? <Text style={styles.quoteAuthor}>— {quote.author}</Text> : null}
+              <Text
+                style={styles.quoteAttribution}
+                onPress={() => Linking.openURL('https://zenquotes.io/')}
+              >
+                Inspirational quotes provided by ZenQuotes API
+              </Text>
+            </>
+          )}
         </View>
 
         <Text style={styles.sectionTitle}>Popular Workouts</Text>
