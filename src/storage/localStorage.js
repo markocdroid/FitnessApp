@@ -6,8 +6,8 @@ const KEYS = {
   completions: 'fitnessapp:daily-workout-completions',
   favorites: 'fitnessapp:favorites',
   actions: 'fitnessapp:user-actions',
-  notifications: 'fitnessapp:notifications',
   settings: 'fitnessapp:settings',
+  reminders: 'fitnessapp:reminders',
 };
 
 const MAX_ACTIONS = 100;
@@ -41,11 +41,13 @@ export const getFavorites = () => readJson(KEYS.favorites, []);
 export const saveDailyCompletions = (completions) => writeJson(KEYS.completions, completions);
 export const getDailyCompletions = () => readJson(KEYS.completions, {});
 
-export const saveNotifications = (notifications) => writeJson(KEYS.notifications, notifications);
-export const getNotifications = () => readJson(KEYS.notifications, []);
-
-export const saveSettings = (settings) => writeJson(KEYS.settings, settings);
 export const getSettings = () => readJson(KEYS.settings, {});
+// Merges into the stored settings so one preference never overwrites another.
+export const saveSettings = async (partial) =>
+  writeJson(KEYS.settings, { ...(await getSettings()), ...partial });
+
+export const saveReminders = (reminders) => writeJson(KEYS.reminders, reminders);
+export const getReminders = () => readJson(KEYS.reminders, []);
 
 export const getUserActions = () => readJson(KEYS.actions, []);
 export const clearUserActions = () => AsyncStorage.removeItem(KEYS.actions).catch(() => {});

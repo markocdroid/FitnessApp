@@ -17,6 +17,7 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       }
     },
+    "plugins": ["expo-notifications"],
     "web": {
       "favicon": "./assets/favicon.png"
     }

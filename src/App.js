@@ -7,6 +7,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { store } from './store/store';
 import { hydrateAndPersistFavorites } from './store/persistFavorites';
+import { setNotificationsEnabled } from './store/notificationsSlice';
 import { hydrateTheme } from './store/themeSlice';
 import { getSettings } from './storage/localStorage';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -23,6 +24,7 @@ function RootNavigator() {
 
   useEffect(() => {
     getSettings().then((settings) => {
+      dispatch(setNotificationsEnabled(settings?.notificationsEnabled === true));
       dispatch(hydrateTheme(settings?.isLightMode !== false));
     });
   }, [dispatch]);

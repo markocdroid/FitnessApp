@@ -63,6 +63,14 @@ export const settingsStyles = StyleSheet.create({
   accountTitle: {
     marginTop: 32,
   },
+  testButton: {
+    alignSelf: 'flex-start',
+    paddingVertical: 12,
+  },
+  testButtonLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
   fieldsCard: {
     borderRadius: 16,
     overflow: 'hidden',

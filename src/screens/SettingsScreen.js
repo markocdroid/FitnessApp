@@ -11,7 +11,15 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  ensureNotificationPermission,
+  notificationsAvailable,
+  sendEnabledNotification,
+  sendTestNotification,
+  syncReminders,
+} from '../services/notifications';
+import { setNotificationsEnabled } from '../store/notificationsSlice';
 import TopNavBar from '../components/TopNavBar';
 import { useAuth } from '../context/AuthContext';
 import { useAppTheme } from '../hooks/useAppTheme';
@@ -27,12 +35,14 @@ export default function SettingsScreen() {
   const dispatch = useDispatch();
   const { colors, isLightMode } = useAppTheme();
   const styles = settingsStyles;
+  const notificationsEnabled = useSelector((state) => state.notifications.enabled);
   const { user, updateUserProfile } = useAuth();
   const [fullName, setFullName] = useState(user?.fullName || user?.username || '');
   const [email, setEmail] = useState(user?.email || '');
   const [fitnessPreferences, setFitnessPreferences] = useState(user?.fitnessPreferences || '');
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState('');
+  const [notifMessage, setNotifMessage] = useState('');
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -46,6 +56,38 @@ export default function SettingsScreen() {
     setMessage('');
     setHasError(false);
     await saveSettings({ isLightMode: value });
+  };
+
+  const toggleNotifications = async (value) => {
+    setNotifMessage('');
+
+    if (value) {
+      if (!notificationsAvailable) {
+        setNotifMessage('Notifications are only available on Android and iOS.');
+        return;
+      }
+      try {
+        const granted = await ensureNotificationPermission();
+        if (!granted) {
+          setNotifMessage(
+            'Notification permission was denied. Allow notifications for this app in your phone settings.'
+          );
+          return;
+        }
+      } catch (error) {
+        setNotifMessage(`Could not request permission: ${error?.message ?? error}`);
+        return;
+      }
+    }
+
+    dispatch(setNotificationsEnabled(value));
+    await saveSettings({ notificationsEnabled: value });
+    try {
+      await syncReminders(value);
+      if (value) await sendEnabledNotification();
+    } catch (error) {
+      setNotifMessage(`Notifications enabled, but sending failed: ${error?.message ?? error}`);
+    }
   };
 
   const saveChanges = async () => {
@@ -95,7 +137,7 @@ export default function SettingsScreen() {
       edges={['top', 'bottom']}
     >
       <View style={[styles.header, { backgroundColor: colors.header }]}>
-        <TopNavBar title="Settings" />
+        <TopNavBar title="Settings" titleColor={colors.text} menuColor={colors.text} />
       </View>
       <KeyboardAvoidingView
         style={styles.keyboardArea}
@@ -133,6 +175,35 @@ export default function SettingsScreen() {
                 thumbColor="#ffffff"
               />
             </View>
+
+            <Text style={[styles.sectionTitle, styles.accountTitle, { color: colors.subtitle }]}>
+              NOTIFICATIONS
+            </Text>
+            <View style={[styles.appearanceCard, { backgroundColor: colors.card }]}>
+              <Text style={[styles.appearanceLabel, { color: colors.text }]}>Enable Notifications</Text>
+              <Switch
+                accessibilityLabel="Enable Notifications"
+                accessibilityRole="switch"
+                value={notificationsEnabled}
+                onValueChange={toggleNotifications}
+                trackColor={{ false: '#777887', true: '#2fc856' }}
+                thumbColor="#ffffff"
+              />
+            </View>
+            {notifMessage ? (
+              <Text style={[styles.message, { color: colors.error }]}>{notifMessage}</Text>
+            ) : null}
+            {notificationsEnabled ? (
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => sendTestNotification().catch(() => {})}
+                style={({ pressed }) => [styles.testButton, pressed && styles.pressed]}
+              >
+                <Text style={[styles.testButtonLabel, { color: colors.accent }]}>
+                  Send test notification
+                </Text>
+              </Pressable>
+            ) : null}
 
             <Text style={[styles.sectionTitle, styles.accountTitle, { color: colors.subtitle }]}>
               ACCOUNT INFORMATION
